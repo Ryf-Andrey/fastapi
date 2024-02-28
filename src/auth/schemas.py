@@ -1,8 +1,17 @@
 import uuid
 from typing import Optional
 
-from fastapi_users import schemas
+from fastapi_users import FastAPIUsers, schemas
 
+from auth.auth import auth_backend
+
+from src.database import User
+from auth.manager import get_user_manager
+
+fastapi_users = FastAPIUsers[User, int](
+    get_user_manager,
+    [auth_backend],
+)
 
 class UserRead(schemas.BaseUser[int]):
     id: int
